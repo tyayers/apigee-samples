@@ -1,0 +1,33 @@
+openapi: 3.0.0
+info:
+  title: Apigee.net User API
+  version: 1.0.0
+  description: API for retrieving user data
+servers:
+  - url: https://mocktarget.apigee.net
+    description: Apigee mock target server
+paths:
+  /json:
+    get:
+      summary: Get user information
+      description: Returns the first name, last name, city, and state of a user.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstName:
+                    type: string
+                    example: John
+                  lastName:
+                    type: string
+                    example: Doe
+                  city:
+                    type: string
+                    example: San Jose
+                  state:
+                    type: string
+                    example: CA

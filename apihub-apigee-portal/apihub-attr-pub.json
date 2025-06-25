@@ -1,0 +1,12 @@
+[
+  {
+    "id": "published",
+    "displayName": "Published",
+    "description": "API is published to a portal."
+  },
+  {
+    "id": "draft",
+    "displayName": "Draft",
+    "description": "API is in draft state, not yet published."
+  }
+]
