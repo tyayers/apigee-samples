@@ -45,15 +45,19 @@ sed -i "s,REGION,$REGION,g" ./apihub-api.local.json
 cp apihub-api-version.json apihub-api-version.local.json
 sed -i "s,PROJECT_ID,$PROJECT_ID,g" ./apihub-api-version.local.json
 sed -i "s,REGION,$REGION,g" ./apihub-api-version.local.json
+cp apihub-api-deployment.json apihub-api-deployment.local.json
+sed -i "s,PROJECT_ID,$PROJECT_ID,g" ./apihub-api-deployment.local.json
+sed -i "s,REGION,$REGION,g" ./apihub-api-deployment.local.json
 
 # create deployment
-apigeecli apihub deployments create -i "apigee-unmanaged-api-v1-deployment" -n "Apigee Mock Target API Deployment" --dep-type "unmanaged" --description "Apigee Mock Target API running in another cloud" --display-name "Apigee Mock Target API External Deployment" --endpoints "https://mocktarget.apigee.net" --resource-uri "https://mocktarget.apigee.net" --slo-type "99-99" -o "$PROJECT_ID" -r "$REGION" -t $(gcloud auth print-access-token)
+curl -X POST "https://apihub.googleapis.com/v1/projects/$PROJECT_ID/locations/$REGION/deployments?deploymentId=apigee-unmanaged-api-v1-deployment" \
+  -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  -H "Content-Type: application/json" \
+  --data "@apihub-api-deployment.local.json"
 
 # create api, version and spec in api hub
 apigeecli apihub apis create -i "apigee-unmanaged-api" -f apihub-api.local.json -r "$REGION" -o "$PROJECT_ID" -t $(gcloud auth print-access-token)
 apigeecli apihub apis versions create -i "apigee-unmanaged-api-v1" --api-id "apigee-unmanaged-api" -f apihub-api-version.local.json -r "$REGION" -o "$PROJECT_ID" -t $(gcloud auth print-access-token)
 apigeecli apihub apis versions specs create -i "apigee-unmanaged-api-v1-spec" --api-id "apigee-unmanaged-api" --version "apigee-unmanaged-api-v1" -d "Apigee Mock Target API v1 Spec" -f "./oas.yaml" -r $REGION -o $PROJECT_ID -t $(gcloud auth print-access-token)
 
-# create version
-apigeecli apihub apis versions 
 ```

@@ -1,0 +1,63 @@
+{
+  "displayName": "Apigee Mock Target API Deployment",
+  "description": "Deployment of Apigee Mock Target API ",
+  "documentation": {
+    "externalUri": "https://mocktarget.apigee.net"
+  },
+  "deploymentType": {
+    "attribute": "projects/PROJECT_ID/locations/REGION/attributes/system-deployment-type",
+    "enumValues": {
+      "values": [
+        {
+          "id": "unmanaged",
+          "displayName": "Unmanaged",
+          "description": "Unmanaged",
+          "immutable": true
+        }
+      ]
+    }
+  },
+  "resourceUri": "https://mocktarget.apigee.net",
+  "endpoints": [
+    "https://mocktarget.apigee.net"
+  ],
+  "apiVersions": [],
+  "slo": {
+    "attribute": "projects/PROJECT_ID/locations/REGION/attributes/system-slo",
+    "enumValues": {
+      "values": [
+        {
+          "id": "99-5",
+          "displayName": "99.5%",
+          "description": "99.5% SLO"
+        }
+      ]
+    }
+  },
+  "environment": {
+    "attribute": "projects/PROJECT_ID/locations/REGION/attributes/system-environment",
+    "enumValues": {
+      "values": [
+        {
+          "id": "prod",
+          "displayName": "Production",
+          "description": "Production"
+        }
+      ]
+    }
+  },
+  "attributes": {
+    "projects/PROJECT_ID/locations/REGION/attributes/portal-published-state": {
+      "attribute": "projects/PROJECT_ID/locations/REGION/attributes/portal-published-state",
+      "enumValues": {
+        "values": [
+          {
+            "id": "published",
+            "displayName": "Published",
+            "description": "API is published to a portal."
+          }
+        ]
+      }
+    }
+  }
+}
