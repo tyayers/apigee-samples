@@ -1,4 +1,4 @@
-# Target Circuit Breaking
+# Target Circuit Breaking Sample
 
 ---
 This sample shows how to implement various circuit breaking and target failover techniques using [Apigee Target Server Load Balancing](https://cloud.google.com/apigee/docs/api-platform/deploy/load-balancing-across-backend-servers).
@@ -7,38 +7,46 @@ Let's get started!
 
 ---
 
-## Setup environment
+## Prepare project dependencies
 
-Ensure you have an active GCP account selected in the Cloud shell
+### 1. Ensure that prerequisite tools are installed, and that you have needed permissions
+
+- [gcloud CLI](https://cloud.google.com/sdk/docs/install) will be used for automating GCP tasks, see the docs site for installation instructions.
+- [apigeecli](https://github.com/apigee/apigeecli) will be used for Apigee automation, see the docs site for installation instructions.
+- [hey](https://github.com/rakyll/hey) will be used to generate load to trigger the circuit breaking.
+- [Apigee](https://cloud.google.com/apigee/docs/api-platform/get-started/provisioning-intro) and [Apigee API Hub](https://cloud.google.com/apigee/docs/apihub/what-is-api-hub) provisioned in a GCP region. The original API Hub test data that come from provisioning should be available.
+- GCP roles needed:
+  - roles/apigee.apiAdminV2 - needed to deploy an Apigee proxy.
+  - roles/run.developer - needed to deploy the rate limited target service to cloud run.
+
+### 2. Ensure you have an active GCP account selected in the Cloud Shell
 
 ```sh
 gcloud auth login
 ```
 
-Navigate to the `target-circuit-breaker` directory in the Cloud shell.
+## Set environment variables
+
+First update the `env.sh` file with your environment variables. Click <walkthrough-editor-open-file filePath="apihub-portal-publish/env.sh">here</walkthrough-editor-open-file> to open the file in the editor.
+
+* `PROJECT_ID` the project where your Apigee organization is located.
+* `REGION` the externally reachable hostname of the Apigee environment group that contains APIGEE_ENV.
+* `APIGEE_ENV` the Apigee environment where the demo resources should be created.
+* `APIGEE_HOST` the Apigee host of the environment / environment group to reach the proxy
+
+After saving, switch to the `target-circuit-breaking` directory and source the env file.
 
 ```sh
-cd target-circuit-breaker
+cd target-circuit-breaking
+source env.sh
 ```
-
-Edit the provided sample `env.sh` file, and set the environment variables there.
-
-Click <walkthrough-editor-open-file filePath="target-circuit-breaker/env.sh">here</walkthrough-editor-open-file> to open the file in the editor
-
-Then, source the `env.sh` file in the Cloud shell.
-
-```sh
-source ./env.sh
-```
-
----
 
 ## Deploy Apigee components
 
 Next, let's create and deploy the Apigee resources necessary to test a target circuit breaker.
 
 ```sh
-./deploy-target-circuit-breaker.sh
+./deploy-solution.sh
 ```
 
 ### Test the APIs
